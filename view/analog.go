@@ -29,15 +29,20 @@ func renderAnalog(t *model.TimeModel, w, h int) image.Image {
 	if err := ctx.LoadFontFace("./res/font/moonbright.ttf", analogFontSize); err != nil {
 		panic(err)
 	}
-	ctx.SetColor(color.White)
+	ctx.SetColor(color.Black)
 
 	// Get center and radius
 	cx := float64(w) / 2.0
 	cy := float64(h) / 2.0
 	r := math.Min(cx, cy) * 0.8
 
+	ctx.DrawRectangle(0, 0, float64(w)-1, float64(h)-1)
+	ctx.Fill()
+
 	nStep := pi2 / 12.0 // Numbers separation in angles
 	fStep := pi2 / 60.0 // Angle separation for minutes and seconds
+
+	ctx.SetColor(color.White)
 
 	// Draw clock numbers
 	for n := 1; n <= 12; n++ {

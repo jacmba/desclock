@@ -42,6 +42,11 @@ func NewView(m *model.TimeModel) *View {
 	}
 
 	w.SetFixedSize(true)
+	w.Canvas().SetOnTypedKey(func(e *fyne.KeyEvent) {
+		if e.Name == "Space" {
+			v.swapMode()
+		}
+	})
 	w.Resize(fyne.NewSize(width, height))
 	w.CenterOnScreen()
 	return &v
