@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	analogFontSize      = 18.0
+	analogFontSize      = 32.0
 	pi2                 = 2.0 * 3.141592
 	piMed               = 3.141592 / 2.0
 	pi                  = 3.141592
@@ -26,7 +26,7 @@ const (
 // Draw analog clock
 func renderAnalog(t *model.TimeModel, w, h int) image.Image {
 	ctx := gg.NewContext(w, h)
-	if err := ctx.LoadFontFace("./res/font/display.ttf", analogFontSize); err != nil {
+	if err := ctx.LoadFontFace("./res/font/moonbright.ttf", analogFontSize); err != nil {
 		panic(err)
 	}
 	ctx.SetColor(color.White)
