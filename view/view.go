@@ -19,12 +19,6 @@ const (
 	width = 400
 
 	height = 400
-
-	hourRadiusPercent = 0.30
-
-	minuteRadiusPercent = 0.50
-
-	secondRadiusPercent = 0.75
 )
 
 // View data structure to process view
