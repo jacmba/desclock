@@ -34,7 +34,7 @@ func renderAnalog(t *model.TimeModel, w, h int) image.Image {
 	// Get center and radius
 	cx := float64(w) / 2.0
 	cy := float64(h) / 2.0
-	r := math.Min(cx, cy) * 0.9
+	r := math.Min(cx, cy) * 0.8
 
 	nStep := pi2 / 12.0 // Numbers separation in angles
 	fStep := pi2 / 60.0 // Angle separation for minutes and seconds

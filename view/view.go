@@ -2,6 +2,7 @@ package view
 
 import (
 	"fmt"
+	"image"
 
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
@@ -34,7 +35,7 @@ func NewView(m *model.TimeModel) *View {
 	a := app.New()
 	w := a.NewWindow("Desclock")
 	v := View{
-		mode:   AnalogView,
+		mode:   DigitalView,
 		model:  m,
 		aPP:    a,
 		window: w,
@@ -48,6 +49,10 @@ func NewView(m *model.TimeModel) *View {
 
 // Init initalize the window system
 func (v *View) Init() {
+	item := fyne.NewMenuItem("Toggle clock mode", v.swapMode)
+	m := fyne.NewMenu("Options", item)
+	menu := fyne.NewMainMenu(m)
+	v.window.SetMainMenu(menu)
 	v.window.ShowAndRun()
 }
 
@@ -67,13 +72,16 @@ func (v *View) renderDigital() {
 	s := strTime(v.model.Second)
 	t := fmt.Sprintf("%s:%s:%s", h, m, s)
 	img := renderDigital(t, v.window.Canvas().Size().Width, v.window.Canvas().Size().Height)
-	raster := canvas.NewRasterFromImage(img)
-	v.window.SetContent(raster)
+	v.renderImage(img)
 }
 
 func (v *View) renderAnalog() {
 	img := renderAnalog(v.model, v.window.Canvas().Size().Width, v.window.Canvas().Size().Height)
-	raster := canvas.NewRasterFromImage(img)
+	v.renderImage(img)
+}
+
+func (v *View) renderImage(i image.Image) {
+	raster := canvas.NewRasterFromImage(i)
 	v.window.SetContent(raster)
 }
 
@@ -83,4 +91,12 @@ func strTime(t uint8) string {
 		s = "0" + s
 	}
 	return s
+}
+
+func (v *View) swapMode() {
+	if v.mode == DigitalView {
+		v.mode = AnalogView
+	} else {
+		v.mode = DigitalView
+	}
 }
