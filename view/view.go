@@ -19,6 +19,12 @@ const (
 	width = 400
 
 	height = 400
+
+	hourRadiusPercent = 0.30
+
+	minuteRadiusPercent = 0.50
+
+	secondRadiusPercent = 0.75
 )
 
 // View data structure to process view
@@ -34,7 +40,7 @@ func NewView(m *model.TimeModel) *View {
 	a := app.New()
 	w := a.NewWindow("Desclock")
 	v := View{
-		mode:   DigitalView,
+		mode:   AnalogView,
 		model:  m,
 		aPP:    a,
 		window: w,
@@ -56,6 +62,8 @@ func (v *View) Update() {
 	v.model.Update()
 	if v.mode == DigitalView {
 		v.renderDigital()
+	} else {
+		v.renderAnalog()
 	}
 }
 
@@ -65,6 +73,12 @@ func (v *View) renderDigital() {
 	s := strTime(v.model.Second)
 	t := fmt.Sprintf("%s:%s:%s", h, m, s)
 	img := renderDigital(t, v.window.Canvas().Size().Width, v.window.Canvas().Size().Height)
+	raster := canvas.NewRasterFromImage(img)
+	v.window.SetContent(raster)
+}
+
+func (v *View) renderAnalog() {
+	img := renderAnalog(v.model, v.window.Canvas().Size().Width, v.window.Canvas().Size().Height)
 	raster := canvas.NewRasterFromImage(img)
 	v.window.SetContent(raster)
 }
